@@ -1,0 +1,10 @@
+# Compiled binaries
+*.exe
+*.obj
+*.o
+
+# Claude Code local config
+.claude/
+
+# VSCode local-only settings
+.vscode/settings.local.json
