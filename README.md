@@ -18,49 +18,6 @@ Each algorithm is a standalone `.cpp` file containing a `custom_sort(std::vector
 | `patience_sorting.cpp` | Patience Sort | O(n log n) | Patience-card-game model |
 | `radix_sort.cpp` | Radix Sort | O(n × k) | k = digits |
 
-## Build
-
-Requires `g++` with C++20 support.
-
-```
-g++ -std=c++20 -O2 -Wall <algorithm>.cpp -o <algorithm>.exe
-```
-
-Run an algorithm against a test input:
-
-```
-.\<algorithm>.exe < tests\small_01.in
-```
-
-The program exits with code 0 if the result is sorted (assertion passes), non-zero otherwise.
-
-## Test generator
-
-`gen.cpp` produces reproducible test inputs (and matching sorted `.ok` files). Uses `std::mt19937` with a configurable seed.
-
-```
-g++ -std=c++20 -O2 gen.cpp -o gen.exe
-
-# Write input to stdout
-.\gen.exe random 20000 1
-
-# Write both <prefix>.in and <prefix>.ok
-.\gen.exe random 20000 1 --out tests\small_01
-```
-
-### Supported test types
-
-| Type | Description |
-|---|---|
-| `random` | Uniform values across full int32 range (`INT_MIN..INT_MAX`). |
-| `sorted` | Ascending `0, 1, ..., n-1`. |
-| `reverse` | Descending `n-1, ..., 1, 0`. |
-| `equal` | All elements identical (random value in `[-10⁶, 10⁶]`). |
-| `few_distinct` | Only 10 distinct values, sampled uniformly. |
-| `nearly_sorted` | Sorted ascending plus ~1% random swaps. |
-| `sawtooth` | Cyclic `i % 100` — short ascending runs, many duplicates. |
-| `organ_pipe` | Ascending up to the middle, then descending — bitonic. |
-
 ## Test design
 
 Tests live in `tests/`. Two size categories per the assignment:
@@ -153,22 +110,3 @@ Times are wall-clock (process spawn to exit) measured via `System.Diagnostics.St
    - For non-negative integers with a bounded range: radix sort (once the negative-number bug is fixed) is among the fastest.
    - Avoid Lomuto quicksort without a 3-way partition when the input may contain many duplicates.
 
-## File structure
-
-```
-.
-├── README.md                  # this file
-├── *.cpp                      # 9 algorithm files + gen.cpp
-├── gen.exe                    # compiled test generator (gitignored)
-├── benchmark.ps1              # benchmark runner
-├── benchmark.csv              # benchmark output (latest run)
-├── tests/
-│   ├── small_01..08.in/.ok    # n = 20,000
-│   └── big_01..08.in/.ok      # n = 100,000
-└── .vscode/                   # build tasks + IntelliSense config
-```
-
-## Notes for submission
-
-- The repository excludes compiled `.exe` files (see `.gitignore`); rebuild locally.
-- For Polygon submission, the algorithm files must be renamed to `<algorithm>_team<id>.cpp`, and the test files to `<small|big>_team<id>_NN.in/.ok`.
