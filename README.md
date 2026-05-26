@@ -55,14 +55,6 @@ For `sorted`, `reverse`, `sawtooth`, and `organ_pipe` the seed does not affect t
 
 ## Benchmark
 
-`benchmark.ps1` runs every algorithm against every test in `tests/`, with a configurable timeout, and writes results to `benchmark.csv`.
-
-```
-.\benchmark.ps1 -TimeoutSec 150 -CsvOut benchmark.csv
-```
-
-Times are wall-clock (process spawn to exit) measured via `System.Diagnostics.Stopwatch`. The process spawn itself adds roughly 30–50 ms of overhead, which dominates the measurement for any algorithm finishing in <100 ms.
-
 ### Results — BIG tests (n = 100,000), milliseconds
 
 | Test | bubble | gnome | merge | quick | intro | heap | insertion | patience | radix |
