@@ -93,7 +93,6 @@ For `sorted`, `reverse`, `sawtooth`, and `organ_pipe` the seed does not affect t
 
 2. **Anomalies**
    - **Patience sort is slow on `sorted` and `nearly_sorted`** (~2.3 s on big), where it should theoretically be optimal (a single pile). The implementation likely uses a binary-search + priority-queue pattern without a short-circuit for already-ordered input.
-   - **Radix sort crashes** with exit code `-1073741819` (Windows access violation, `0xC0000005`) on `random` and `few_distinct` — the test types that contain negative values. The implementation does not handle the sign bit of int32. On inputs restricted to non-negative values it works correctly and is very fast.
    - Quicksort on `equal` at small size (103 ms) is ~3× slower than baseline (35 ms) — the same pattern as on big, scaled down.
 
 3. **Practical takeaways**
